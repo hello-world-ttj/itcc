@@ -982,7 +982,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       CarouselSlider(
                                         items: filteredVideos.map((video) {
                                           return customVideo(
-                                              context: context, video: video);
+                                              context: context,
+                                              title: video.title ?? '',
+                                              videoId: extractYoutubeId(
+                                                      video.link ?? '') ??
+                                                  '');
                                         }).toList(),
                                         options: CarouselOptions(
                                           height: 225,

@@ -18,6 +18,7 @@ import 'package:itcc/src/interface/components/Cards/award_card.dart';
 import 'package:itcc/src/interface/components/Cards/certificate_card.dart';
 import 'package:itcc/src/interface/components/ModalSheets/write_review.dart';
 import 'package:itcc/src/interface/components/animations/glowing_profile.dart';
+import 'package:itcc/src/interface/components/common/custom_video.dart';
 import 'package:itcc/src/interface/components/common/review_barchart.dart';
 import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_icon_container.dart';
@@ -27,8 +28,7 @@ import 'package:intl/intl.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class ReviewsState extends StateNotifier<int> {
   ReviewsState() : super(1);
 
@@ -599,9 +599,8 @@ class ProfilePreview extends ConsumerWidget {
                                 itemCount: user.videos!.length,
                                 physics: const PageScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  return profileVideo(
-                                      context: context,
-                                      video: user.videos![index]);
+                                   return profileVideo(context:context,
+                                  title:user.videos![index].name??'',videoId: extractYoutubeId(user.videos![index].link??'')??'');
                                 },
                               ),
                             ),
@@ -853,21 +852,21 @@ class ProfilePreview extends ConsumerWidget {
         ));
   }
 
-  Widget profileVideo({required BuildContext context, required Link video}) {
-    final videoUrl = video.link;
-
-    final ytController = YoutubePlayerController.fromVideoId(
-      videoId: YoutubePlayerController.convertUrlToId(videoUrl ?? '')!,
+  Widget profileVideo  (  {required String videoId,
+    required String title,
+    required BuildContext context}) {
+  final ytController = YoutubePlayerController(
+    initialVideoId: videoId,
+    flags: const YoutubePlayerFlags(
+      disableDragSeek: true,
       autoPlay: false,
-      params: const YoutubePlayerParams(
-        enableJavaScript: true,
-        loop: true,
-        mute: false,
-        showControls: true,
-        showFullscreenButton: true,
-      ),
-    );
-
+      loop: true,
+      mute: false,
+      controlsVisibleAtStart: true,
+      enableCaption: true,
+      isLive: false,
+    ),
+  );
     return Padding(
       padding: const EdgeInsets.only(right: 16, left: 10),
       child: Column(
@@ -878,7 +877,7 @@ class ProfilePreview extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text(video.name!,
+                child: Text(title,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 18)),
               ),

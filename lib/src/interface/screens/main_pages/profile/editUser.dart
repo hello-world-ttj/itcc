@@ -1706,32 +1706,6 @@ class _EditUserState extends ConsumerState<EditUser> {
                                   );
                                 },
                               ),
-                              // if (isVideoDetailsVisible)
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       left: 20, right: 20, bottom: 70),
-                              //   child: Row(
-                              //     children: [
-                              //       Expanded(
-                              //         // Ensures the CustomTextFormField takes the available space
-                              //         child: CustomTextFormField(
-                              //           // onTap: () {
-                              //           //   // showVideoLinkSheet(
-                              //           //   //     addVideo: _addNewVideo,
-                              //           //   //     textController1: videoNameController,
-                              //           //   //     textController2: videoLinkController,
-                              //           //   //     fieldName: 'Add Youtube Link',
-                              //           //   //     title: 'Add Video Link',
-                              //           //   //     context: context);
-                              //           // },
-                              //           textController: videoLinkController,
-                              //           readOnly: true,
-                              //           labelText: 'Enter Video Link',
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 20, right: 20, bottom: 30),

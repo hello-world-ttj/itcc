@@ -4,11 +4,11 @@ import 'package:itcc/src/data/api_routes/folder_api/folder_api.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/folder_model.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/interface/components/common/custom_video.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:itcc/src/data/globals.dart' as globals;
 import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'dart:typed_data';
 
@@ -62,18 +62,18 @@ class _FolderViewPageState extends ConsumerState<FolderViewPage>
   }
 
   Widget _buildVideoPlayer(String videoUrl) {
-    final ytController = YoutubePlayerController.fromVideoId(
-      videoId: YoutubePlayerController.convertUrlToId(videoUrl)!,
+  final ytController = YoutubePlayerController(
+    initialVideoId: extractYoutubeId(videoUrl)??'',
+    flags: const YoutubePlayerFlags(
+      disableDragSeek: true,
       autoPlay: false,
-      params: const YoutubePlayerParams(
-        enableJavaScript: true,
-        loop: true,
-        mute: false,
-        showControls: true,
-        showFullscreenButton: true,
-      ),
-    );
-
+      loop: true,
+      mute: false,
+      controlsVisibleAtStart: true,
+      enableCaption: true,
+      isLive: false,
+    ),
+  );
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
